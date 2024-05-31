@@ -11,7 +11,7 @@ The Cheers project is a collection of Python scripts designed to create a semant
   - Uses OpenAI's text embedding model to generate embeddings for the spirits dataset.
   - Loads the data, preprocesses it, generates embeddings, and writes the results back to a CSV file.
 
-- **Pinecone Upsertion Script**: `1_1_1_upsert_to_pinecone_spirits_openai_text_embedding_3_large.py`
+- **Pinecone Upsert Script**: `1_1_1_upsert_to_pinecone_spirits_openai_text_embedding_3_large.py`
   - Loads and preprocesses the spirits dataset, then upserts the data to a Pinecone index.
   - Includes functions for data loading, preprocessing, and upsertion.
 
