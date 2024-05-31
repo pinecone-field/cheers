@@ -31,5 +31,7 @@ pip install -r requirements.txt
 ```
 Copy the .env_sampe to .env and update the settings.
 
+This code was tested with Python 3.10
+
 ## Note  
 All scripts are designed to be run in sequence.
