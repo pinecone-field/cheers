@@ -1,5 +1,4 @@
 # Cheers Project Summary
-
 The Cheers project is a collection of Python scripts designed to create a semantic and image search index for a dataset of spirits (alcoholic beverages).
 
 ## Key Components
@@ -20,11 +19,15 @@ The Cheers project is a collection of Python scripts designed to create a semant
   - Processes each image, generates an embedding, and appends it to a list.
 
 ## Environment Setup
+```
 conda create -n cheers_venv python=3.10
 conda activate cheers
+conda activate cheers
 conda activate cheers_venv
-pip install -r requirements.txt  
+pip install -r requirements.txt
+```
+## Note  
+All scripts are designed to be run as standalone programs.
 
-The project includes instructions for setting up the environment above using conda and pip. 
-
-All scripts are designed to be run as standalone programs.  
+## Owner
+Kevin M. Butler, Customer Success Engineer
