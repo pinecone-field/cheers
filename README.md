@@ -4,6 +4,9 @@ The Cheers project is a collection of Python scripts designed to create a semant
 ## Owner
 Kevin M. Butler, Customer Success Engineer
 
+## TODO
+For the image processing and streamlit app, I need to provide the images.zip ⏳ TODO: add as a download from a GCS bucket. 
+
 ## Key Components
 
 - **CSV Dataset**: `1_0_0_spirits_data_with_imageURLs.csv`
