@@ -4,9 +4,6 @@ The Cheers project is a collection of Python scripts designed to create a semant
 ## Owner
 Kevin M. Butler, Customer Success Engineer
 
-## TODO
-- [ ] Add a downloadable copy of `1_0_0_spirits_data_with_imageURLs.csv` to this README. Meanwhile, contact Kevin Butler for a copy.
-
 ## Key Components
 
 - **CSV Dataset**: `1_0_0_spirits_data_with_imageURLs.csv`
