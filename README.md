@@ -29,5 +29,7 @@ conda activate cheers
 conda activate cheers_venv
 pip install -r requirements.txt
 ```
+Copy the .env_sampe to .env and update the settings.
+
 ## Note  
 All scripts are designed to be run in sequence.
