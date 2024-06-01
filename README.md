@@ -4,9 +4,6 @@ The Cheers project is a collection of Python scripts designed to create a semant
 ## Owner
 Kevin M. Butler, Customer Success Engineer
 
-## TODO
-For the image processing and streamlit app, I need to provide the images.zip ⏳ TODO: add as a download from a GCS bucket. 
-
 ## Key Components
 
 - **CSV Dataset**: `1_0_0_spirits_data_with_imageURLs.csv`
@@ -32,9 +29,12 @@ conda activate cheers
 conda activate cheers_venv
 pip install -r requirements.txt
 ```
+## Environment Variables
 Copy the .env_sampe to .env and update the settings.
 
-This code was tested with Python 3.10
+## Images files
+Download the [images.zip](https://drive.google.com/file/d/1bDE5SiVFCJOowuQ-eGDsoF2OL1Iwa4Ea/view?usp=drive_link) file and place the /images directory in the root of your project. 
 
 ## Note  
 All scripts are designed to be run in sequence.
+
