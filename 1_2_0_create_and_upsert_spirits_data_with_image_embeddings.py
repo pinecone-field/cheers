@@ -63,7 +63,6 @@ def main():
     # Generate embeddings and prepare the data
     logging.info("Generating image embeddings and preparing the data...")
     data = []
-    skipped_rows = []
 
     for idx, row in spirits_data.iterrows():
         image_path = row["imageURL"]  # Assuming 'imageURL' contains the local file path
@@ -72,16 +71,13 @@ def main():
             metadata = row.drop(["index", "imageURL"]).to_dict()
             data.append({"id": str(row["index"]), "values": embedding, "metadata": metadata})
         else:
-            skipped_rows.append(idx)
+            continue
 
     # Convert to DataFrame
     final_df = pd.DataFrame(data)
 
     # Replace NaN values with "" in metadata
     final_df["metadata"] = final_df["metadata"].apply(lambda x: {k: v if pd.notna(v) else "" for k, v in x.items()})
-
-    # Remove skipped rows from the original DataFrame
-    spirits_data = spirits_data.drop(skipped_rows)
 
     # Initialize Pinecone client
     api_key = os.getenv("PINECONE_API_KEY")
@@ -95,12 +91,6 @@ def main():
     index.upsert_from_dataframe(final_df, batch_size=900)
 
     logging.info("Data upserted successfully to Pinecone.")
-
-    # Save the updated DataFrame to a new CSV file
-    output_csv_file_path = os.getenv("OUTPUT_CSV_FILE_PATH")
-    logging.info(f"Saving the updated DataFrame to {output_csv_file_path}...")
-    spirits_data.to_csv(output_csv_file_path, index=False)
-
     logging.info("Script completed successfully.")
 
 if __name__ == "__main__":
