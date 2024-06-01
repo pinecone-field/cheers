@@ -1,5 +1,5 @@
 # Cheers Project Summary
-The Cheers project is a collection of Python scripts designed to create a semantic and image search index for a dataset of spirits (alcoholic beverages).
+The Cheers project comprises a series of Python scripts developed to construct a semantic and image search index for an extensive dataset of spirits (alcoholic beverages). Utilizing advanced models from OpenAI and CLIP, the project processes and indexes detailed information about various spirits. This enables efficient searches based on multiple criteria, including name, category, country of origin, and visual appearance, thereby facilitating comprehensive data accessibility and retrieval for researchers and industry professionals.
 
 ## Owner
 Kevin M. Butler, Customer Success Engineer
