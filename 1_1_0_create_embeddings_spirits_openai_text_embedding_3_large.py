@@ -1,19 +1,30 @@
 # 1_1_0_create_embeddings_spirits_openai_text_embedding_3_large.py
 
 """
-This Python script is used to generate embeddings for a dataset of spirits (alcoholic beverages) using OpenAI's text embedding model.
+This Python script generates embeddings for a dataset of spirits (alcoholic
+beverages) using OpenAI's text embedding model.
 
-The script first loads environment variables from a .env file, including the OpenAI API key and the embedding model to use. It then sets up logging.
+The script first loads environment variables from a .env file, including the
+OpenAI API key and the embedding model to use. It then sets up logging.
 
-The load_and_preprocess_data function loads a CSV file into a pandas DataFrame, selects specific columns, fills any missing values with an empty string, and combines the values of all columns into a single string for each row.
+The load_and_preprocess_data function loads a CSV file into a pandas DataFrame,
+selects specific columns, fills any missing values with an empty string, and
+combines the values of all columns into a single string for each row.
 
-The get_embeddings_batch function sends a batch of texts to the OpenAI API to generate embeddings. It includes retry logic in case of failure.
+The get_embeddings_batch function sends a batch of texts to the OpenAI API to
+generate embeddings. It includes retry logic in case of failure.
 
-The generate_embeddings function iterates over the DataFrame in batches, generates embeddings for each batch, and adds them to the DataFrame. If the process is interrupted, it logs a message and raises an exception.
+The generate_embeddings function iterates over the DataFrame in batches,
+generates embeddings for each batch, and adds them to the DataFrame. If the
+process is interrupted, it logs a message and raises an exception.
 
-The main function gets the input and output file paths from environment variables, loads and preprocesses the data, generates embeddings, and writes the DataFrame with embeddings to a CSV file. It handles keyboard interrupts and logs a message when processing is completed.
+The main function gets the input and output file paths from environment
+variables, loads and preprocesses the data, generates embeddings, and writes
+the DataFrame with embeddings to a CSV file. It handles keyboard interrupts and
+logs a message when processing is completed.
 
-The script is intended to be run as a standalone program. If it's run as a script, it calls the main function.
+The script is intended to be run as a standalone program. If it's run as a
+script, it calls the main function.
 """
 import pandas as pd
 from openai import OpenAI
@@ -114,7 +125,10 @@ def get_embeddings_batch(texts, retries=5):
     """
     for attempt in range(retries):
         try:
-            response = client.embeddings.create(input=texts, model=embedding_model)
+            response = client.embeddings.create(
+                input=texts,
+                model=embedding_model
+            )
             return [data.embedding for data in response.data]
         except (openai.Timeout, openai.APIError, openai.APIConnectionError) as e:
             logging.warning(f"Attempt {attempt+1} failed: {e}")

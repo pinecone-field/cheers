@@ -1,13 +1,28 @@
 # 1_2_0_create_and_upsert_spirits_data_with_image_embeddings.py
 
 """
-This Python code snippet is part of a larger script that generates image embeddings using the CLIP model and prepares the data for upsertion into a Pinecone index.
+This Python code snippet is part of a larger script that generates image
+embeddings using the CLIP model and prepares the data for upsertion into a
+Pinecone index.
 
-The generate_image_embedding function takes an image path as input, opens the image, converts it to RGBA if it has transparency, and then processes it using a pre-defined processor and model. The processed image features are then returned as a flattened list. If there's an error during this process, it logs the error and returns None.
+The generate_image_embedding function takes an image path as input, opens the
+image, converts it to RGBA if it has transparency, and then processes it using
+a pre-defined processor and model. The processed image features are then
+returned as a flattened list. If there's an error during this process, it logs
+the error and returns None.
 
-After defining this function, the script logs a message indicating that it's starting to generate image embeddings and prepare the data. It then initializes two empty lists: data and skipped_rows.
+After defining this function, the script logs a message indicating that it's
+starting to generate image embeddings and prepare the data. It then initializes
+two empty lists: data and skipped_rows.
 
-The script then iterates over each row in a DataFrame spirits_data. For each row, it gets the image path from the 'imageURL' column and generates an image embedding. If the embedding is successfully generated, it creates a dictionary of metadata by dropping the 'index' and 'imageURL' columns from the row and converting the remaining columns to a dictionary. It then appends a new dictionary to the data list, with 'id' set to the 'index' of the row, 'values' set to the embedding, and 'metadata' set to the metadata dictionary. If the embedding is not successfully generated, the row is skipped.
+The script then iterates over each row in a DataFrame spirits_data. For each
+row, it gets the image path from the 'imageURL' column and generates an image
+embedding. If the embedding is successfully generated, it creates a dictionary
+of metadata by dropping the 'index' and 'imageURL' columns from the row and
+converting the remaining columns to a dictionary. It then appends a new
+dictionary to the data list, with 'id' set to the 'index' of the row, 'values'
+set to the embedding, and 'metadata' set to the metadata dictionary. If the
+embedding is not successfully generated, the row is skipped.
 """
 
 import logging
@@ -70,13 +85,15 @@ def main():
     data = []
 
     for idx, row in spirits_data.iterrows():
-        image_path = row["imageURL"]  # Assuming 'imageURL' contains the local file path
+        image_path = row["imageURL"]
         embedding = generate_image_embedding(image_path)
         if embedding:
             metadata = row.drop(["index", "imageURL"]).to_dict()
-            data.append(
-                {"id": str(row["index"]), "values": embedding, "metadata": metadata}
-            )
+            data.append({
+                "id": str(row["index"]),
+                "values": embedding,
+                "metadata": metadata
+            })
         else:
             continue
 

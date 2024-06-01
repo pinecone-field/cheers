@@ -1,18 +1,32 @@
 # 1_1_1_upsert_to_pinecone_spirits_openai_text_embedding_3_large.py
 
 """
-This Python script is used to load and preprocess a dataset of spirits (alcoholic beverages) from a CSV file, and then upsert (insert or update) the data to an index in Pinecone, a vector database for machine learning.
+This Python script is used to load and preprocess a dataset of spirits
+(alcoholic beverages) from a CSV file, and then upsert (insert or update) the
+data to an index in Pinecone, a vector database for machine learning.
 
-The script first loads environment variables from a .env file, including the Pinecone API key and other configuration details. It then sets up logging.
+The script first loads environment variables from a .env file, including the
+Pinecone API key and other configuration details. It then sets up logging.
 
-The load_and_preprocess_data function loads a CSV file into a pandas DataFrame, converts the 'values' column to a numpy array, renames the 'index' column to 'id', fills any missing values in the metadata columns with an empty string, and combines the metadata fields into a dictionary in a new 'metadata' column. It then drops the original metadata columns.
+The load_and_preprocess_data function loads a CSV file into a pandas DataFrame,
+converts the 'values' column to a numpy array, renames the 'index' column to
+'id', fills any missing values in the metadata columns with an empty string,
+and combines the metadata fields into a dictionary in a new 'metadata' column.
+It then drops the original metadata columns.
 
-The create_or_connect_to_index function creates a new index in Pinecone or connects to an existing one. It checks if the index already exists, and if not, it creates the index and waits for it to be initialized. It then connects to the index and returns it.
+The create_or_connect_to_index function creates a new index in Pinecone or
+connects to an existing one. It checks if the index already exists, and if not,
+it creates the index and waits for it to be initialized. It then connects to
+the index and returns it.
 
-The main function initializes a connection to Pinecone, creates or connects to the index, loads and preprocesses the data, views the index stats, and upserts the data to the index. It logs a message when the data is upserted successfully.
+The main function initializes a connection to Pinecone, creates or connects to
+the index, loads and preprocesses the data, views the index stats, and upserts
+the data to the index. It logs a message when after the data is upserted.
 
-The script is intended to be run as a standalone program. If it's run as a script, it calls the main function.
+The script is intended to be run as a standalone program. If it's run as a
+script, it calls the main function.
 """
+
 import os
 import time
 import logging
@@ -40,7 +54,8 @@ def load_and_preprocess_data(file_path):
         file_path (str): Path to the CSV file containing the embeddings data.
 
     Returns:
-        pd.DataFrame: Preprocessed DataFrame with 'id', 'values', and 'metadata' columns.
+        pd.DataFrame: Preprocessed DataFrame with 'id', 'values', and
+        'metadata' columns.
     """
     logger.info(f"Loading data from {file_path}")
     df = pd.read_csv(file_path)
@@ -109,7 +124,12 @@ def create_or_connect_to_index(api_key, index_name, dimension, metric, spec):
     if index_name not in pc.list_indexes().names():
         logger.info(f"Creating index '{index_name}'")
         # If index does not exist, create it
-        pc.create_index(index_name, dimension=dimension, metric=metric, spec=spec)
+        pc.create_index(
+            index_name,
+            dimension=dimension,
+            metric=metric,
+            spec=spec
+        )
 
         # Wait for index to be initialized
         while not pc.describe_index(index_name).status["ready"]:
