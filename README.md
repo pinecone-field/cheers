@@ -70,4 +70,6 @@ Download the [images.zip](https://drive.google.com/file/d/1bDE5SiVFCJOowuQ-eGDso
 All scripts are designed to be run in sequence.
 
 ## Credits
-The dataset used in this project is a subset of the 'spirits' file found in the [Wikiliq - Alcohol dataset (May, 2022)](https://www.kaggle.com/datasets/limtis/wikiliq-dataset)
+- The dataset used in this project is a subset of the 'spirits' file found in the [Wikiliq - Alcohol dataset (May, 2022)](https://www.kaggle.com/datasets/limtis/wikiliq-dataset).
+- The images were searched from Google Images and downloaded from the internet.
+
