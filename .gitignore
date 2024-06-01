@@ -2,6 +2,8 @@
 1_1_0_embeddings_spirits_openai_text_embedding_3_large.csv
 1_2_0_spirits_data_with_image_embeddings.csv
 
+# Customer directories to exclude
+images/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
