@@ -19,12 +19,15 @@ from pinecone import Pinecone
 from dotenv import load_dotenv
 import os
 
+
 def main():
     # Load environment variables from .env file
     load_dotenv()
 
     # Configure logging
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+    logging.basicConfig(
+        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+    )
 
     # Load the CSV file
     csv_file_path = os.getenv("CSV_FILE")
@@ -34,7 +37,9 @@ def main():
     # Initialize the CLIP model and processor
     logging.info("Initializing the CLIP model and processor...")
     device = "cuda" if torch.cuda.is_available() else "cpu"
-    model, processor = CLIPModel.from_pretrained("openai/clip-vit-base-patch32"), CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
+    model, processor = CLIPModel.from_pretrained(
+        "openai/clip-vit-base-patch32"
+    ), CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
     model.to(device)
 
     def generate_image_embedding(image_path):
@@ -69,7 +74,9 @@ def main():
         embedding = generate_image_embedding(image_path)
         if embedding:
             metadata = row.drop(["index", "imageURL"]).to_dict()
-            data.append({"id": str(row["index"]), "values": embedding, "metadata": metadata})
+            data.append(
+                {"id": str(row["index"]), "values": embedding, "metadata": metadata}
+            )
         else:
             continue
 
@@ -77,7 +84,9 @@ def main():
     final_df = pd.DataFrame(data)
 
     # Replace NaN values with "" in metadata
-    final_df["metadata"] = final_df["metadata"].apply(lambda x: {k: v if pd.notna(v) else "" for k, v in x.items()})
+    final_df["metadata"] = final_df["metadata"].apply(
+        lambda x: {k: v if pd.notna(v) else "" for k, v in x.items()}
+    )
 
     # Initialize Pinecone client
     api_key = os.getenv("PINECONE_API_KEY")
@@ -92,6 +101,7 @@ def main():
 
     logging.info("Data upserted successfully to Pinecone.")
     logging.info("Script completed successfully.")
+
 
 if __name__ == "__main__":
     main()

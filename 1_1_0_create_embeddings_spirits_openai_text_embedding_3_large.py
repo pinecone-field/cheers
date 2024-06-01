@@ -153,9 +153,9 @@ def generate_embeddings(df, batch_size=2000):
     except KeyboardInterrupt:
         logging.info("Processing interrupted.")
         raise
-    
+
     # Truncate to match the DataFrame length
-    df["values"] = embeddings[: len(df)]  
+    df["values"] = embeddings[: len(df)]
 
     # drop 'combined' column
     df = df.drop(columns=["combined"])
@@ -169,9 +169,7 @@ def main():
 
     try:
         df = generate_embeddings(df)
-        df.to_csv(
-            ouput_datapath, index=True
-        )
+        df.to_csv(ouput_datapath, index=True)
     except KeyboardInterrupt:
         logging.info("Main process interrupted. Exiting...")
     finally:

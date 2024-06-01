@@ -40,6 +40,7 @@ def get_embedding(text: str) -> List[float]:
     embedding = embedding_response.data[0].embedding
     return embedding
 
+
 # Streamlit app
 def main():
     st.title("Spirit Search")

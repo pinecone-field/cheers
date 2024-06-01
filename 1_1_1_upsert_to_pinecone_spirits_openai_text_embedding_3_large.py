@@ -26,8 +26,11 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Configure logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
 logger = logging.getLogger(__name__)
+
 
 def load_and_preprocess_data(file_path):
     """
@@ -44,31 +47,47 @@ def load_and_preprocess_data(file_path):
 
     # Convert string to list and then to numpy array
     logger.info("Converting 'values' column to numpy array")
-    df['values'] = df['values'].apply(eval).apply(np.array)
+    df["values"] = df["values"].apply(eval).apply(np.array)
 
     # Rename 'index' column to 'id' and convert to string
-    if 'index' in df.columns:
+    if "index" in df.columns:
         logger.info("Renaming 'index' column to 'id'")
-        df.rename(columns={'index': 'id'}, inplace=True)
-        df['id'] = df['id'].astype(str)
+        df.rename(columns={"index": "id"}, inplace=True)
+        df["id"] = df["id"].astype(str)
 
     # Replace NaN in metadata fields with appropriate defaults
-    metadata_columns = ['Name', 'Country', 'Brand', 'Categories', 'Tasting Notes', 'ABV', 'Base Ingredient',
-                        'Years Aged', 'Rating', 'Rate Count', 'Price', 'Volume', 'Description', 'status', 'imageURL']
+    metadata_columns = [
+        "Name",
+        "Country",
+        "Brand",
+        "Categories",
+        "Tasting Notes",
+        "ABV",
+        "Base Ingredient",
+        "Years Aged",
+        "Rating",
+        "Rate Count",
+        "Price",
+        "Volume",
+        "Description",
+        "status",
+        "imageURL",
+    ]
     logger.info("Replacing NaN values in metadata columns")
 
     # Fill NaN values with empty strings
-    df[metadata_columns] = df[metadata_columns].fillna('')
+    df[metadata_columns] = df[metadata_columns].fillna("")
 
     # Create 'metadata' column by converting metadata fields to a dictionary
     logger.info("Creating 'metadata' column")
-    df['metadata'] = df[metadata_columns].apply(lambda x: x.to_dict(), axis=1)
+    df["metadata"] = df[metadata_columns].apply(lambda x: x.to_dict(), axis=1)
 
     # Drop original metadata columns
     logger.info("Dropping original metadata columns")
     df = df.drop(metadata_columns, axis=1)
 
     return df
+
 
 def create_or_connect_to_index(api_key, index_name, dimension, metric, spec):
     """
@@ -91,9 +110,9 @@ def create_or_connect_to_index(api_key, index_name, dimension, metric, spec):
         logger.info(f"Creating index '{index_name}'")
         # If index does not exist, create it
         pc.create_index(index_name, dimension=dimension, metric=metric, spec=spec)
-        
+
         # Wait for index to be initialized
-        while not pc.describe_index(index_name).status['ready']:
+        while not pc.describe_index(index_name).status["ready"]:
             logger.info("Waiting for index to be initialized...")
             time.sleep(1)
     else:
@@ -103,25 +122,28 @@ def create_or_connect_to_index(api_key, index_name, dimension, metric, spec):
     index = pc.Index(index_name)
     return index
 
+
 def main():
     # Initialize connection to Pinecone
-    api_key = os.getenv('PINECONE_API_KEY')
-    index_name = os.getenv('SEMANTIC_INDEX_NAME')
-    cloud = os.getenv('PINECONE_CLOUD')
-    region = os.getenv('PINECONE_REGION')
-    metric = os.getenv('PINECONE_METRIC')
+    api_key = os.getenv("PINECONE_API_KEY")
+    index_name = os.getenv("SEMANTIC_INDEX_NAME")
+    cloud = os.getenv("PINECONE_CLOUD")
+    region = os.getenv("PINECONE_REGION")
+    metric = os.getenv("PINECONE_METRIC")
     spec = ServerlessSpec(cloud=cloud, region=region)
-    dimension = os.getenv('OPENAI_MODEL_DIMENSION')
+    dimension = os.getenv("OPENAI_MODEL_DIMENSION")
 
     # Create or connect to the index
     logger.info(f"Creating or connecting to index '{index_name}'")
-    index = create_or_connect_to_index(api_key, index_name, dimension=dimension, metric=metric, spec=spec)
+    index = create_or_connect_to_index(
+        api_key, index_name, dimension=dimension, metric=metric, spec=spec
+    )
 
     # Load and preprocess the embeddings data
-    file_path = os.getenv('UPSERT_FILE_PATH')
+    file_path = os.getenv("UPSERT_FILE_PATH")
     logger.info(f"Loading and preprocessing data from {file_path}")
     df = load_and_preprocess_data(file_path)
-    
+
     # View index stats
     logger.info("Index stats:")
     logger.info(index.describe_index_stats())
@@ -132,5 +154,6 @@ def main():
 
     logger.info("Data upserted successfully")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()
