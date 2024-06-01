@@ -1,3 +1,5 @@
+# 1_1_0_create_embeddings_spirits_openai_text_embedding_3_large.py
+
 """
 This Python script is used to generate embeddings for a dataset of spirits (alcoholic beverages) using OpenAI's text embedding model.
 

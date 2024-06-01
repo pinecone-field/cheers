@@ -1,3 +1,5 @@
+# 1_1_1_upsert_to_pinecone_spirits_openai_text_embedding_3_large.py
+
 """
 This Python script is used to load and preprocess a dataset of spirits (alcoholic beverages) from a CSV file, and then upsert (insert or update) the data to an index in Pinecone, a vector database for machine learning.
 
@@ -107,11 +109,13 @@ def main():
     index_name = os.getenv('SEMANTIC_INDEX_NAME')
     cloud = os.getenv('PINECONE_CLOUD')
     region = os.getenv('PINECONE_REGION')
+    metric = os.getenv('PINECONE_METRIC')
     spec = ServerlessSpec(cloud=cloud, region=region)
+    dimension = os.getenv('OPENAI_MODEL_DIMENSION')
 
     # Create or connect to the index
     logger.info(f"Creating or connecting to index '{index_name}'")
-    index = create_or_connect_to_index(api_key, index_name, dimension=3072, metric='cosine', spec=spec)
+    index = create_or_connect_to_index(api_key, index_name, dimension=dimension, metric=metric, spec=spec)
 
     # Load and preprocess the embeddings data
     file_path = os.getenv('UPSERT_FILE_PATH')

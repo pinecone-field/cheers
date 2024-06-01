@@ -1,3 +1,5 @@
+# 1_3_0_streamlit_alcohol_spirits.py
+
 """
 This Python script uses Streamlit, OpenAI, and Pinecone to create a web application for searching spirits (alcoholic beverages).
 
