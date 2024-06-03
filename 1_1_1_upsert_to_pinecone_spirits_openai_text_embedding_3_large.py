@@ -174,6 +174,10 @@ def main():
 
     logger.info("Data upserted successfully")
 
-
+    # Clean up
+    # delete 1_1_0_embeddings_spirits_openai_text_embedding_3_large.csv
+    os.remove(file_path)
+    logger.info(f"Deleted {file_path}")
+    
 if __name__ == "__main__":
     main()
