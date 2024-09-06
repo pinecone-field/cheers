@@ -151,7 +151,7 @@ def main():
     region = os.getenv("PINECONE_REGION")
     metric = os.getenv("PINECONE_METRIC")
     spec = ServerlessSpec(cloud=cloud, region=region)
-    dimension = os.getenv("OPENAI_MODEL_DIMENSION")
+    dimension = int(os.getenv("OPENAI_MODEL_DIMENSION"))  # Ensure dimension is an integer
 
     # Create or connect to the index
     logger.info(f"Creating or connecting to index '{index_name}'")
